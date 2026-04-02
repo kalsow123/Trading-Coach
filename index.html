@@ -60,266 +60,115 @@ button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
 .cl-row{display:flex;align-items:center;gap:var(--sp3);font-size:var(--tx-sm);padding:var(--sp2) 0;border-bottom:1px solid var(--color-divider)}
 .cl-row:last-child{border-bottom:none}
 .cl-icon{font-size:.85rem;width:1.2em;text-align:center;flex-shrink:0;font-weight:700}
-.cl-row.done{color:var(--color-text)}
-.cl-row.done .cl-icon{color:var(--color-success)}
-.cl-row.fail{color:var(--color-text-muted)}
-.cl-row.fail .cl-icon{color:var(--color-error)}
+.cl-row.done{color:var(--color-text)}.cl-row.done .cl-icon{color:var(--color-success)}
+.cl-row.fail{color:var(--color-text-muted)}.cl-row.fail .cl-icon{color:var(--color-error)}
 .ts{font-size:var(--tx-xs);color:var(--color-text-faint);text-align:center;padding:var(--sp2) 0}
-.no-actions{font-size:var(--tx-sm);color:var(--color-text-muted);font-style:italic;padding:var(--sp2) 0}
-.notif-banner{padding:var(--sp3) var(--sp5);background:var(--color-warning-bg);border:1px solid var(--color-warning);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:space-between;gap:var(--sp3);font-size:var(--tx-sm);font-weight:600;color:var(--color-warning);cursor:pointer;transition:opacity var(--ease)}
+.notif-banner{padding:var(--sp3) var(--sp5);background:var(--color-warning-bg);border:1px solid var(--color-warning);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:space-between;gap:var(--sp3);font-size:var(--tx-sm);font-weight:600;color:var(--color-warning)}
 .notif-banner .nb-text{display:flex;align-items:center;gap:var(--sp2)}
-.notif-banner .nb-btn{padding:var(--sp2) var(--sp3);border-radius:var(--radius-full);background:var(--color-warning);color:#fff;font-size:var(--tx-xs);font-weight:700;border:none}
+.notif-banner .nb-btn{padding:var(--sp2) var(--sp3);border-radius:var(--radius-full);background:var(--color-warning);color:#fff;font-size:var(--tx-xs);font-weight:700;border:none;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="app">
-
-<!-- Notification banner -->
 <div class="notif-banner" id="notif-banner" style="display:none">
-<span class="nb-text">&#128276; Notifikace jsou vypnut&eacute;</span>
+<span class="nb-text">&#128276; Notifikace jsou vypnuté</span>
 <button class="nb-btn" id="notif-enable">Zapnout</button>
 </div>
-
 <header class="header">
 <div class="header-logo">
-<svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-label="Trading Coach"><rect width="34" height="34" rx="8" fill="var(--color-primary)" opacity=".15"/><polyline points="5,25 11,17 17,21 23,9 29,13" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="29" cy="13" r="2.2" fill="var(--color-primary)"/></svg>
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none"><rect width="34" height="34" rx="8" fill="var(--color-primary)" opacity=".15"/><polyline points="5,25 11,17 17,21 23,9 29,13" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="29" cy="13" r="2.2" fill="var(--color-primary)"/></svg>
 <div class="logo-text"><span class="logo-title">Trading Coach</span><span class="logo-sub">EURUSD 30M</span></div>
 </div>
-<button class="theme-btn" id="theme-btn" aria-label="Prepnout tema"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+<button class="theme-btn" id="theme-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
 </header>
-
-<!-- Form -->
 <div class="card" id="form-card">
 <div class="card-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="card-header-title">Pre-Trade Checklist</span></div>
-<div class="card-body">
-<div class="questions-wrap">
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 1</div><div class="q-label">Zkontrolov&aacute;no s Canvou?</div><div class="btn-group" data-q="q1"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button></div></div>
+<div class="card-body"><div class="questions-wrap">
+<div class="q-block"><div class="q-num">Otázka 1</div><div class="q-label">Zkontrolováno s Canvou?</div><div class="btn-group" data-q="q1"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button></div></div>
 <div class="divider"></div>
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 2</div><div class="q-label">V jak&eacute;m druhu P.A. jsme?</div><div class="btn-group" data-q="q2"><button class="btn-opt" data-val="WAVE">WAVE</button><button class="btn-opt" data-val="EXT">EXT</button><button class="btn-opt" data-val="RANGE">RANGE</button></div></div>
+<div class="q-block"><div class="q-num">Otázka 2</div><div class="q-label">V jakém druhu P.A. jsme?</div><div class="btn-group" data-q="q2"><button class="btn-opt" data-val="WAVE">WAVE</button><button class="btn-opt" data-val="EXT">EXT</button><button class="btn-opt" data-val="RANGE">RANGE</button></div></div>
 <div class="divider"></div>
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 3</div><div class="q-label">Kolik&aacute;t&aacute; je v trendu vlna?</div><div class="btn-group" data-q="q3"><button class="btn-opt" data-val="1">1</button><button class="btn-opt" data-val="2">2</button><button class="btn-opt" data-val="3">3</button><button class="btn-opt" data-val="4">4</button><button class="btn-opt" data-val="5">5</button><button class="btn-opt" data-val="6">6</button><button class="btn-opt" data-val="7">7</button><button class="btn-opt" data-val="8">8</button><button class="btn-opt" data-val="8+">8+</button></div></div>
+<div class="q-block"><div class="q-num">Otázka 3</div><div class="q-label">Kolikátá je v trendu vlna?</div><div class="btn-group" data-q="q3"><button class="btn-opt" data-val="1">1</button><button class="btn-opt" data-val="2">2</button><button class="btn-opt" data-val="3">3</button><button class="btn-opt" data-val="4">4</button><button class="btn-opt" data-val="5">5</button><button class="btn-opt" data-val="6">6</button><button class="btn-opt" data-val="7">7</button><button class="btn-opt" data-val="8">8</button><button class="btn-opt" data-val="8+">8+</button></div></div>
 <div class="divider"></div>
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 4</div><div class="q-label">Kolik sv&iacute;&ccedil;ek v trendu b&yacute;?</div><div class="btn-group" data-q="q4"><button class="btn-opt" data-val="1-24">1&ndash;24</button><button class="btn-opt" data-val="25-48">25&ndash;48</button><button class="btn-opt" data-val="49-120">49&ndash;120</button><button class="btn-opt" data-val="120+">120+</button></div></div>
+<div class="q-block"><div class="q-num">Otázka 4</div><div class="q-label">Kolik svíček v trendu běží?</div><div class="btn-group" data-q="q4"><button class="btn-opt" data-val="1-24">1–24</button><button class="btn-opt" data-val="25-48">25–48</button><button class="btn-opt" data-val="49-120">49–120</button><button class="btn-opt" data-val="120+">120+</button></div></div>
 <div class="divider"></div>
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 5</div><div class="q-label">TP nastaveno limitn&iacute;m p&rcaron;&iacute;kazem dle strategie?</div><div class="btn-group" data-q="q5"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button><button class="btn-opt" data-val="ZATIM">Zat&iacute;m ne&rcaron;e&scaron;&iacute;m TP</button></div></div>
+<div class="q-block"><div class="q-num">Otázka 5</div><div class="q-label">TP nastaveno limitním příkazem dle strategie?</div><div class="btn-group" data-q="q5"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button><button class="btn-opt" data-val="ZATIM">Zatím neřeším TP</button></div></div>
 <div class="divider"></div>
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 6</div><div class="q-label">Dodržel jsem strategii?</div><div class="btn-group" data-q="q6"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button></div></div>
+<div class="q-block"><div class="q-num">Otázka 6</div><div class="q-label">Dodržel jsem strategii?</div><div class="btn-group" data-q="q6"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button></div></div>
 <div class="divider"></div>
-
-<div class="q-block"><div class="q-num">Ot&aacute;zka 7</div><div class="q-label">Provedl jsi z&aacute;znam?</div><div class="btn-group" data-q="q7"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button><button class="btn-opt" data-val="NA">N/A</button></div></div>
-
+<div class="q-block"><div class="q-num">Otázka 7</div><div class="q-label">Provedl jsi záznam?</div><div class="btn-group" data-q="q7"><button class="btn-opt" data-val="ANO">ANO</button><button class="btn-opt" data-val="NE">NE</button><button class="btn-opt" data-val="NA">N/A</button></div></div>
 <button class="btn-eval" id="eval-btn" disabled>Vyhodnotit</button>
 </div></div></div>
-
-<!-- Result -->
 <div class="card result-card" id="result-card">
-<div class="card-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span class="card-header-title">V&yacute;sledek</span></div>
+<div class="card-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span class="card-header-title">Výsledek</span></div>
 <div class="card-body" style="display:flex;flex-direction:column;gap:var(--sp4)">
 <p class="ts" id="ts"></p>
 <div id="verdict" class="verdict green"><span class="verdict-icon" id="v-icon"></span><span id="v-text">GREEN</span></div>
 <div class="meta-row" id="meta"></div>
 <div id="actions-wrap" style="display:none"><div class="action-list" id="action-list"></div></div>
 </div></div>
-
-<!-- Checklist -->
 <div class="card" id="checklist-card" style="display:none">
 <div class="card-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="card-header-title">Checklist</span></div>
 <div class="card-body"><div class="cl" id="checklist"></div></div></div>
-
-<button class="btn-reset" id="reset-btn" style="display:none">Nov&yacute; checklist</button>
-
+<button class="btn-reset" id="reset-btn" style="display:none">Nový checklist</button>
 </div>
-
 <script>
-// Theme
-const root = document.documentElement;
-let theme = 'dark';
-const themeBtn = document.getElementById('theme-btn');
-function setTheme(t) {
-  theme = t;
-  root.setAttribute('data-theme', t);
-  themeBtn.innerHTML = t === 'dark'
-    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+const root=document.documentElement;let theme='dark';const themeBtn=document.getElementById('theme-btn');
+function setTheme(t){theme=t;root.setAttribute('data-theme',t);themeBtn.innerHTML=t==='dark'?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';}
+setTheme('dark');themeBtn.addEventListener('click',()=>setTheme(theme==='dark'?'light':'dark'));
+const ans={q1:null,q2:null,q3:null,q4:null,q5:null,q6:null,q7:null};
+const evalBtn=document.getElementById('eval-btn');
+document.querySelectorAll('.btn-group').forEach(g=>{g.querySelectorAll('.btn-opt').forEach(b=>{b.addEventListener('click',()=>{g.querySelectorAll('.btn-opt').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');ans[g.dataset.q]=b.dataset.val;evalBtn.disabled=!Object.values(ans).every(v=>v!==null);});});});
+evalBtn.addEventListener('click',evaluate);
+document.getElementById('reset-btn').addEventListener('click',reset);
+function evaluate(){
+const{q1,q2,q3,q4,q5,q6,q7}=ans;const actions=[];const cl=[];const red=[];
+if(q1==='ANO'){cl.push({l:'Canva zkontrolována',d:true})}else{actions.push({label:'Canva',text:'Otevři Canvu a zkontroluj co dělat v aktuální P.A.',tone:'error'});cl.push({l:'Canva zkontrolována',d:false});red.push('Canva')}
+cl.push({l:'P.A. identifikováno',d:true});
+if(q2==='WAVE'){actions.push({label:'P.A. WAVE',text:'1-2 WAVE není TP. Exekuce na 4. vlně, nebo po BOS. Pozor na předchozí RANGE.',tone:'info'})}
+else if(q2==='RANGE'){actions.push({label:'P.A. RANGE',text:'HTFM RANGE = TP. Trvá-li RANGE dlouho, obchoduje se i v něm.',tone:'info'})}
+else if(q2==='EXT'){actions.push({label:'P.A. EXT',text:'Tady máš tendence nejčastěji brát předčasný TP. Bacha! TP je až po BOS, nebo při 123 EXT. Ne dříve! Korekce v EXT jsou normální.',tone:'warning'})}
+cl.push({l:'Vlna spočtena',d:true});
+if(q3==='1'){actions.push({label:'Vlna 1',text:'NO TP',tone:'warning'})}
+else if(q3==='4'){actions.push({label:'Vlna 4',text:'Nastav TP dle 123 EXT',tone:'gold'})}
+else if(['5','6','7','8','8+'].includes(q3)){actions.push({label:'Vlna '+q3,text:'TP ob WAVE dle 123 EXT',tone:'gold'})}
+if(q4==='1-24'||q4==='25-48'){actions.push({label:'Svíčky '+q4,text:'Jsou-li jen 2 Vlny = není TP, mimo HTFM RANGE a EXT',tone:'warning'})}
+else if(q4==='120+'){actions.push({label:'Svíčky 120+',text:'Nastavit TP dle 123 EXT, nebo na vrchol 4/5 v RANGE',tone:'gold'})}
+cl.push({l:'TP limitní příkaz nastaven',d:true});
+if(q6==='ANO'){cl.push({l:'Strategie dodržena',d:true})}else{actions.push({label:'Strategie',text:'Zapiš pro růst co jsi udělal špatně do AI',tone:'error'});cl.push({l:'Strategie dodržena',d:false});red.push('Strategie')}
+if(q7==='ANO'){cl.push({l:'Záznam proveden',d:true})}else if(q7==='NE'){actions.push({label:'Záznam',text:'Dodělej zápis!',tone:'error'});cl.push({l:'Záznam proveden',d:false});red.push('Záznam')}else{cl.push({l:'Záznam proveden',d:true})}
+const isGreen=red.length===0;const now=new Date();
+document.getElementById('ts').textContent=now.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'long',year:'numeric'})+' '+now.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
+const vEl=document.getElementById('verdict');vEl.className='verdict '+(isGreen?'green':'red');
+document.getElementById('v-icon').textContent=isGreen?'\u2705':'\u26a0\ufe0f';
+document.getElementById('v-text').textContent=isGreen?'GREEN \u2013 V\u0161e v po\u0159\u00e1dku!':'RED \u2013 '+red.join(', ');
+document.getElementById('meta').innerHTML=[['Canva',q1==='ANO'?'\u2705':'\u274c'],['P.A.',q2],['Vlna',q3],['Sv\u00ed\u010dky',q4],['TP',q5==='ANO'?'\u2705':(q5==='NE'?'\u274c':'\u2014')]].map(([k,v])=>'<div class="meta-chip">'+k+' <strong>'+v+'</strong></div>').join('');
+const actionsWrap=document.getElementById('actions-wrap');const actionList=document.getElementById('action-list');
+if(actions.length>0){actionList.innerHTML=actions.map(a=>'<div class="action-item '+a.tone+'"><div><span class="action-label">'+a.label+'</span><span class="action-text">'+a.text+'</span></div></div>').join('');actionsWrap.style.display='';}else{actionsWrap.style.display='none';}
+document.getElementById('checklist').innerHTML=cl.map(i=>'<div class="cl-row '+(i.d?'done':'fail')+'"><span class="cl-icon">'+(i.d?'\u2713':'\u2717')+'</span><span>'+i.l+'</span></div>').join('');
+document.getElementById('form-card').style.display='none';const rc=document.getElementById('result-card');rc.classList.add('vis');document.getElementById('checklist-card').style.display='';document.getElementById('reset-btn').style.display='';rc.scrollIntoView({behavior:'smooth',block:'start'});
 }
-setTheme('dark');
-themeBtn.addEventListener('click', () => setTheme(theme === 'dark' ? 'light' : 'dark'));
-
-// Answers
-const ans = {q1:null,q2:null,q3:null,q4:null,q5:null,q6:null,q7:null};
-const evalBtn = document.getElementById('eval-btn');
-document.querySelectorAll('.btn-group').forEach(g => {
-  g.querySelectorAll('.btn-opt').forEach(b => {
-    b.addEventListener('click', () => {
-      g.querySelectorAll('.btn-opt').forEach(x => x.classList.remove('sel'));
-      b.classList.add('sel');
-      ans[g.dataset.q] = b.dataset.val;
-      evalBtn.disabled = !Object.values(ans).every(v => v !== null);
-    });
-  });
+function reset(){Object.keys(ans).forEach(k=>ans[k]=null);document.querySelectorAll('.btn-opt').forEach(b=>b.classList.remove('sel'));evalBtn.disabled=true;document.getElementById('form-card').style.display='';document.getElementById('result-card').classList.remove('vis');document.getElementById('checklist-card').style.display='none';document.getElementById('reset-btn').style.display='none';window.scrollTo({top:0,behavior:'smooth'});}
+const NOTIF_HOURS=[7,10,13,16];let swReg=null;
+async function initNotifications(){
+if(!('serviceWorker' in navigator)||!('Notification' in window)){console.log('Notifications not supported');return;}
+try{swReg=await navigator.serviceWorker.register('sw.js');console.log('SW registered');}catch(e){console.error('SW error',e);return;}
+if(Notification.permission==='default'){document.getElementById('notif-banner').style.display='flex';}
+else if(Notification.permission==='denied'){document.getElementById('notif-banner').style.display='flex';document.querySelector('.nb-text').textContent='\u26a0 Notifikace jsou zablokov\u00e1ny v prohl\u00ed\u017ee\u010di';document.getElementById('notif-enable').textContent='Jak povolit';}
+else{startScheduler();}
+}
+document.getElementById('notif-enable').addEventListener('click',async()=>{
+if(Notification.permission==='denied'){alert('Notifikace jsou zablokov\u00e1ny.\nOtev\u0159i nastaven\u00ed prohl\u00ed\u017ee\u010de > Soukrom\u00ed a zabezpe\u010den\u00ed > Nastaven\u00ed web\u016f > Upozorn\u011bn\u00ed a povol tuto str\u00e1nku.');return;}
+const perm=await Notification.requestPermission();
+if(perm==='granted'){document.getElementById('notif-banner').style.display='none';startScheduler();
+if(swReg&&swReg.active){swReg.active.postMessage({type:'SHOW_NOTIFICATION',body:'Notifikace zapnuty! Budu t\u011b upozor\u0148ovat v 7:00, 10:00, 13:00, 16:00.'});}}
 });
-
-evalBtn.addEventListener('click', evaluate);
-document.getElementById('reset-btn').addEventListener('click', reset);
-
-function evaluate() {
-  const {q1,q2,q3,q4,q5,q6,q7} = ans;
-  const actions = [];
-  const cl = [];
-  const red = [];
-
-  // Q1
-  if(q1==='ANO'){cl.push({l:'Canva zkontrolov\u00e1na',d:true})} else {actions.push({label:'Canva',text:'Otev\u0159i Canvu a zkontroluj co d\u011blat v aktu\u00e1ln\u00ed P.A.',tone:'error'});cl.push({l:'Canva zkontrolov\u00e1na',d:false});red.push('Canva')}
-
-  // Q2
-  cl.push({l:'P.A. identifikov\u00e1no',d:true});
-  if(q2==='WAVE'){actions.push({label:'P.A. WAVE',text:'1-2 WAVE nen\u00ed TP. Exekuce na 4. vln\u011b, nebo po BOS. Pozor na p\u0159edchoz\u00ed RANGE.',tone:'info'})}
-  else if(q2==='RANGE'){actions.push({label:'P.A. RANGE',text:'HTFM RANGE = TP. Trv\u00e1-li RANGE dlouho, obchoduje se i v n\u011bm.',tone:'info'})}
-  else if(q2==='EXT'){actions.push({label:'P.A. EXT',text:'Tady m\u00e1\u0161 tendence nej\u010dast\u011bji br\u00e1t p\u0159ed\u010dasn\u00fd TP. Bacha! TP je a\u017e po BOS, nebo p\u0159i 123 EXT. Ne d\u0159\u00edve! Korekce v EXT jsou norm\u00e1ln\u00ed.',tone:'warning'})}
-
-  // Q3
-  cl.push({l:'Vlna spo\u010dtena',d:true});
-  if(q3==='1'){actions.push({label:'Vlna 1',text:'NO TP',tone:'warning'})}
-  else if(q3==='4'){actions.push({label:'Vlna 4',text:'Nastav TP dle 123 EXT',tone:'gold'})}
-  else if(['5','6','7','8','8+'].includes(q3)){actions.push({label:'Vlna '+q3,text:'TP ob WAVE dle 123 EXT',tone:'gold'})}
-
-  // Q4
-  if(q4==='1-24'||q4==='25-48'){actions.push({label:'Sv\u00ed\u010dky '+q4,text:'Jsou-li jen 2 Vlny = nen\u00ed TP, mimo HTFM RANGE a EXT',tone:'warning'})}
-  else if(q4==='120+'){actions.push({label:'Sv\u00ed\u010dky 120+',text:'Nastavit TP dle 123 EXT, nebo na vrchol 4/5 v RANGE',tone:'gold'})}
-
-  // Q5
-  cl.push({l:'TP limitn\u00ed p\u0159\u00edkaz nastaven',d:true});
-
-  // Q6
-  if(q6==='ANO'){cl.push({l:'Strategie dodr\u017eena',d:true})} else {actions.push({label:'Strategie',text:'Zapi\u0161 pro r\u016fst co\u2019s ud\u011blal \u0161patn\u011b do AI',tone:'error'});cl.push({l:'Strategie dodr\u017eena',d:false});red.push('Strategie')}
-
-  // Q7
-  if(q7==='ANO'){cl.push({l:'Z\u00e1znam proveden',d:true})}
-  else if(q7==='NE'){actions.push({label:'Z\u00e1znam',text:'Dod\u011blej z\u00e1pis!',tone:'error'});cl.push({l:'Z\u00e1znam proveden',d:false});red.push('Z\u00e1znam')}
-  else{cl.push({l:'Z\u00e1znam proveden',d:true})}
-
-  const isGreen = red.length === 0;
-  const now = new Date();
-  document.getElementById('ts').textContent = now.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'long',year:'numeric'}) + ' ' + now.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
-
-  const vEl = document.getElementById('verdict');
-  vEl.className = 'verdict ' + (isGreen ? 'green' : 'red');
-  document.getElementById('v-icon').textContent = isGreen ? '\u2705' : '\u26a0\ufe0f';
-  document.getElementById('v-text').textContent = isGreen ? 'GREEN \u2013 V\u0161e v po\u0159\u00e1dku!' : 'RED \u2013 ' + red.join(', ');
-
-  document.getElementById('meta').innerHTML = [['Canva',q1==='ANO'?'\u2705':'\u274c'],['P.A.',q2],['Vlna',q3],['Sv\u00ed\u010dky',q4],['TP',q5==='ANO'?'\u2705':(q5==='NE'?'\u274c':'\u2014')]].map(([k,v]) => '<div class="meta-chip">'+k+' <strong>'+v+'</strong></div>').join('');
-
-  const actionsWrap = document.getElementById('actions-wrap');
-  const actionList = document.getElementById('action-list');
-  if(actions.length > 0){
-    actionList.innerHTML = actions.map(a => '<div class="action-item '+a.tone+'"><div><span class="action-label">'+a.label+'</span><span class="action-text">'+a.text+'</span></div></div>').join('');
-    actionsWrap.style.display = '';
-  } else { actionsWrap.style.display = 'none'; }
-
-  document.getElementById('checklist').innerHTML = cl.map(i => '<div class="cl-row '+(i.d?'done':'fail')+'"><span class="cl-icon">'+(i.d?'\u2713':'\u2717')+'</span><span>'+i.l+'</span></div>').join('');
-
-  document.getElementById('form-card').style.display = 'none';
-  const rc = document.getElementById('result-card');
-  rc.classList.add('vis');
-  document.getElementById('checklist-card').style.display = '';
-  document.getElementById('reset-btn').style.display = '';
-  rc.scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function reset() {
-  Object.keys(ans).forEach(k => ans[k] = null);
-  document.querySelectorAll('.btn-opt').forEach(b => b.classList.remove('sel'));
-  evalBtn.disabled = true;
-  document.getElementById('form-card').style.display = '';
-  document.getElementById('result-card').classList.remove('vis');
-  document.getElementById('checklist-card').style.display = 'none';
-  document.getElementById('reset-btn').style.display = 'none';
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// === NOTIFICATION SYSTEM ===
-const NOTIF_HOURS = [7, 10, 13, 16];
-let swReg = null;
-
-async function initNotifications() {
-  if (!('serviceWorker' in navigator) || !('Notification' in window)) {
-    console.log('Notifications not supported');
-    return;
-  }
-  // Register SW
-  try {
-    swReg = await navigator.serviceWorker.register('sw.js');
-    console.log('SW registered');
-  } catch(e) { console.error('SW error', e); return; }
-
-  // Check permission
-  if (Notification.permission === 'default') {
-    document.getElementById('notif-banner').style.display = 'flex';
-  } else if (Notification.permission === 'denied') {
-    document.getElementById('notif-banner').style.display = 'flex';
-    document.querySelector('.nb-text').innerHTML = '&#9888; Notifikace jsou zablokov\u00e1ny v prohl\u00ed\u017ee\u010di';
-    document.getElementById('notif-enable').textContent = 'Jak povolit';
-  } else {
-    startScheduler();
-  }
-}
-
-document.getElementById('notif-enable').addEventListener('click', async () => {
-  if (Notification.permission === 'denied') {
-    alert('Notifikace jsou zablokov\u00e1ny.\nOtev\u0159i nastaven\u00ed prohl\u00ed\u017ee\u010de > Soukrom\u00ed a zabezpe\u010den\u00ed > Nastaven\u00ed web\u016f > Upozorn\u011bn\u00ed a povol tuto str\u00e1nku.');
-    return;
-  }
-  const perm = await Notification.requestPermission();
-  if (perm === 'granted') {
-    document.getElementById('notif-banner').style.display = 'none';
-    startScheduler();
-    // Test notification
-    if (swReg) {
-      swReg.active.postMessage({type:'SHOW_NOTIFICATION', body:'Notifikace zapnuty! Budu t\u011b upozor\u0148ovat v 7:00, 10:00, 13:00, 16:00.'});
-    }
-  }
-});
-
-function startScheduler() {
-  checkAndNotify();
-  setInterval(checkAndNotify, 30000); // check every 30s
-}
-
-function checkAndNotify() {
-  const now = new Date();
-  const h = now.getHours();
-  const m = now.getMinutes();
-  const key = 'lastNotif_' + h;
-  
-  if (NOTIF_HOURS.includes(h) && m < 5) {
-    // Only fire once per hour window
-    const today = now.toDateString();
-    if (localStorage.getItem(key) !== today) {
-      localStorage.setItem(key, today);
-      fireNotification(h);
-    }
-  }
-}
-
-function fireNotification(hour) {
-  const msgs = {
-    7: '\ud83c\udf05 Dobr\u00e9 r\u00e1no! Vypl\u0148 Pre-Trade Checklist p\u0159ed za\u010d\u00e1tkem obchodov\u00e1n\u00ed.',
-    10: '\u23f0 10:00 \u2013 \u010cas na kontrolu! Vypl\u0148 checklist.',
-    13: '\ud83d\udd54 13:00 \u2013 Odpoledn\u00ed check! Nezapome\u0148 na checklist.',
-    16: '\ud83c\udf07 16:00 \u2013 Posledn\u00ed kontrola dne. Vypl\u0148 checklist!'
-  };
-  if (swReg && swReg.active) {
-    swReg.active.postMessage({type:'SHOW_NOTIFICATION', body: msgs[hour] || 'Vypl\u0148 Pre-Trade Checklist!'});
-  }
-}
-
+function startScheduler(){checkAndNotify();setInterval(checkAndNotify,30000);}
+function checkAndNotify(){const now=new Date();const h=now.getHours();const m=now.getMinutes();const key='lastNotif_'+h;
+if(NOTIF_HOURS.includes(h)&&m<5){const today=now.toDateString();if(localStorage.getItem(key)!==today){localStorage.setItem(key,today);fireNotification(h);}}}
+function fireNotification(hour){const msgs={7:'\ud83c\udf05 Dobr\u00e9 r\u00e1no! Vypl\u0148 Pre-Trade Checklist p\u0159ed za\u010d\u00e1tkem obchodov\u00e1n\u00ed.',10:'\u23f0 10:00 \u2013 \u010cas na kontrolu! Vypl\u0148 checklist.',13:'\ud83d\udd54 13:00 \u2013 Odpoledn\u00ed check! Nezapome\u0148 na checklist.',16:'\ud83c\udf07 16:00 \u2013 Posledn\u00ed kontrola dne. Vypl\u0148 checklist!'};
+if(swReg&&swReg.active){swReg.active.postMessage({type:'SHOW_NOTIFICATION',body:msgs[hour]||'Vypl\u0148 Pre-Trade Checklist!'});}}
 initNotifications();
-<\/script>
-<\/body>
-<\/html>
+</script>
+</body>
+</html>
