@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Coach — EURUSD</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="light"]{
+  --color-bg:#f7f6f2;--color-surface:#f9f8f5;--color-surface-2:#fbfbf9;
+  --color-surface-offset:#f3f0ec;--color-border:#d4d1ca;--color-divider:#dcd9d5;
+  --color-text:#28251d;--color-text-muted:#7a7974;--color-text-faint:#bab9b4;
+  --color-primary:#01696f;--color-primary-hover:#0c4e54;
+  --color-success:#437a22;--color-success-bg:#d4dfcc;
+  --color-error:#a12c7b;--color-error-bg:#e0ced7;
+  --color-warning:#964219;--color-warning-bg:#ddcfc6;
+  --shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+  --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+  --sp1:.25rem;--sp2:.5rem;--sp3:.75rem;--sp4:1rem;--sp5:1.25rem;--sp6:1.5rem;--sp8:2rem;
+  --tx-xs:clamp(.75rem,.7rem + .25vw,.875rem);--tx-sm:clamp(.875rem,.8rem + .35vw,1rem);
+  --tx-base:clamp(1rem,.95rem + .25vw,1.125rem);--tx-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+  --tx-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+  --ease:180ms cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dark"]{
+  --color-bg:#171614;--color-surface:#1c1b19;--color-surface-2:#201f1d;
+  --color-surface-offset:#222120;--color-border:#393836;--color-divider:#2a2928;
+  --color-text:#cdccca;--color-text-muted:#797876;--color-text-faint:#5a5957;
+  --color-primary:#4f98a3;--color-primary-hover:#227f8b;
+  --color-success:#6daa45;--color-success-bg:#2a3a26;
+  --color-error:#d163a7;--color-error-bg:#3d2b38;
+  --color-warning:#bb653b;--color-warning-bg:#3d2e25;
+  --shadow-md:0 4px 12px oklch(0 0 0/.3);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{min-height:100dvh;font-family:'Satoshi',system-ui,sans-serif;font-size:var(--tx-base);color:var(--color-text);background:var(--color-bg);display:flex;flex-direction:column;align-items:center;padding:var(--sp6) var(--sp4) var(--sp8);transition:background var(--ease),color var(--ease)}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--color-primary);outline-offset:3px;border-radius:var(--radius-sm)}
+.app{width:100%;max-width:540px;display:flex;flex-direction:column;gap:var(--sp5)}
+
+.header{display:flex;align-items:center;justify-content:space-between;padding:var(--sp4) var(--sp5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-md)}
+.header-logo{display:flex;align-items:center;gap:var(--sp3)}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-title{font-size:var(--tx-sm);font-weight:700}
+.logo-sub{font-size:var(--tx-xs);color:var(--color-text-muted)}
+.theme-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-full);background:var(--color-surface-offset);color:var(--color-text-muted);border:1px solid var(--color-border);transition:color var(--ease),background var(--ease)}
+.theme-btn:hover{color:var(--color-text);background:var(--color-border)}
+
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);overflow:hidden}
+.card-header{padding:var(--sp3) var(--sp5);border-bottom:1px solid var(--color-divider);display:flex;align-items:center;gap:var(--sp2)}
+.card-header-title{font-size:var(--tx-xs);font-weight:700;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.08em}
+.card-body{padding:var(--sp5)}
+.questions-wrap{display:flex;flex-direction:column;gap:var(--sp4)}
+.q-block{display:flex;flex-direction:column;gap:var(--sp2)}
+.q-num{font-size:var(--tx-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.07em}
+.q-label{font-size:var(--tx-base);font-weight:500;line-height:1.4}
+.btn-group{display:flex;flex-wrap:wrap;gap:var(--sp2);padding-top:var(--sp1)}
+.btn-opt{padding:var(--sp2) var(--sp3);border-radius:var(--radius-full);border:1.5px solid var(--color-border);font-size:var(--tx-sm);font-weight:500;color:var(--color-text-muted);background:var(--color-surface-offset);min-height:40px;transition:border-color var(--ease),color var(--ease),background var(--ease)}
+.btn-opt:hover{border-color:var(--color-primary);color:var(--color-primary);background:var(--color-surface-2)}
+.btn-opt.sel{border-color:var(--color-primary);color:var(--color-primary);background:color-mix(in oklch,var(--color-primary) 14%,var(--color-surface))}
+.divider{height:1px;background:var(--color-divider)}
+.btn-eval{width:100%;padding:var(--sp3) var(--sp5);border-radius:var(--radius-lg);background:var(--color-primary);color:#fff;font-size:var(--tx-sm);font-weight:700;letter-spacing:.03em;min-height:48px;transition:background var(--ease),opacity var(--ease)}
+.btn-eval:hover:not(:disabled){background:var(--color-primary-hover)}
+.btn-eval:disabled{opacity:.4;cursor:not-allowed}
+.btn-reset{width:100%;padding:var(--sp2) var(--sp5);border-radius:var(--radius-lg);border:1.5px solid var(--color-border);color:var(--color-text-muted);font-size:var(--tx-sm);font-weight:500;min-height:44px;background:transparent;transition:border-color var(--ease),color var(--ease)}
+.btn-reset:hover{border-color:var(--color-primary);color:var(--color-primary)}
+
+.result-card{display:none;flex-direction:column;gap:var(--sp4)}
+.result-card.vis{display:flex}
+.verdict{padding:var(--sp4) var(--sp5);border-radius:var(--radius-lg);display:flex;align-items:center;gap:var(--sp3);font-weight:700;font-size:var(--tx-base)}
+.verdict.green{background:var(--color-success-bg);color:var(--color-success)}
+.verdict.red{background:var(--color-error-bg);color:var(--color-error)}
+.meta-row{display:flex;flex-wrap:wrap;gap:var(--sp2)}
+.meta-chip{padding:var(--sp1) var(--sp3);border-radius:var(--radius-full);background:var(--color-surface-offset);font-size:var(--tx-xs);font-weight:500;color:var(--color-text-muted);border:1px solid var(--color-border)}
+.meta-chip strong{color:var(--color-text)}
+.reactions{display:flex;flex-direction:column;gap:var(--sp3)}
+.ri{padding:var(--sp3) var(--sp4);border-radius:var(--radius-md);background:var(--color-surface-offset);border-left:3px solid var(--color-primary);font-size:var(--tx-sm);line-height:1.6}
+.ri.ok{border-left-color:var(--color-success)}
+.ri.warn{border-left-color:var(--color-warning)}
+.ri.info{border-left-color:var(--color-primary)}
+.cl{display:flex;flex-direction:column;gap:0}
+.cl-row{display:flex;align-items:center;gap:var(--sp3);font-size:var(--tx-sm);padding:var(--sp2) 0;border-bottom:1px solid var(--color-divider)}
+.cl-row:last-child{border-bottom:none}
+.cl-icon{font-size:.85rem;width:1.2em;text-align:center;flex-shrink:0;font-weight:700}
+.cl-row.done{color:var(--color-text)}
+.cl-row.done .cl-icon{color:var(--color-success)}
+.cl-row.fail{color:var(--color-text-muted)}
+.cl-row.fail .cl-icon{color:var(--color-error)}
+.ts{font-size:var(--tx-xs);color:var(--color-text-faint);text-align:center;padding:var(--sp2) 0}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="header-logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Trading Coach">
+        <rect width="34" height="34" rx="8" fill="var(--color-primary)" opacity=".15"/>
+        <polyline points="5,25 11,17 17,21 23,9 29,13" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="29" cy="13" r="2.2" fill="var(--color-primary)"/>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-title">Trading Coach</span>
+        <span class="logo-sub">EURUSD · 30M</span>
+      </div>
+    </div>
+    <button class="theme-btn" id="theme-btn" aria-label="Přepnout téma">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <div class="card" id="form-card">
+    <div class="card-header">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span class="card-header-title">Pre-Trade Checklist</span>
+    </div>
+    <div class="card-body">
+      <div class="questions-wrap">
+        <div class="q-block">
+          <div class="q-num">Otázka 1</div>
+          <div class="q-label">Zkontrolováno s Canvou?</div>
+          <div class="btn-group" data-q="q1">
+            <button class="btn-opt" data-val="ANO">✅ ANO</button>
+            <button class="btn-opt" data-val="NE">❌ NE</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="q-block">
+          <div class="q-num">Otázka 2</div>
+          <div class="q-label">V jakém druhu P.A. jsme?</div>
+          <div class="btn-group" data-q="q2">
+            <button class="btn-opt" data-val="WAVE">📊 WAVE</button>
+            <button class="btn-opt" data-val="EXT">🚀 EXT</button>
+            <button class="btn-opt" data-val="RANGE">↔️ RANGE</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="q-block">
+          <div class="q-num">Otázka 3</div>
+          <div class="q-label">Kolikátá je v trendu vlna?</div>
+          <div class="btn-group" data-q="q3">
+            <button class="btn-opt" data-val="1">1</button>
+            <button class="btn-opt" data-val="2">2</button>
+            <button class="btn-opt" data-val="3">3</button>
+            <button class="btn-opt" data-val="4">4</button>
+            <button class="btn-opt" data-val="5">5</button>
+            <button class="btn-opt" data-val="6">6</button>
+            <button class="btn-opt" data-val="7">7</button>
+            <button class="btn-opt" data-val="8">8</button>
+            <button class="btn-opt" data-val="8+">8+</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="q-block">
+          <div class="q-num">Otázka 4</div>
+          <div class="q-label">Kolik svíček v trendu běží?</div>
+          <div class="btn-group" data-q="q4">
+            <button class="btn-opt" data-val="1-24">1–24</button>
+            <button class="btn-opt" data-val="25-48">25–48</button>
+            <button class="btn-opt" data-val="49-120">49–120</button>
+            <button class="btn-opt" data-val="120+">120+</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="q-block">
+          <div class="q-num">Otázka 5</div>
+          <div class="q-label">TP nastaveno limitním příkazem dle strategie?</div>
+          <div class="btn-group" data-q="q5">
+            <button class="btn-opt" data-val="ANO">✅ ANO</button>
+            <button class="btn-opt" data-val="NE">❌ NE</button>
+            <button class="btn-opt" data-val="ZATIM">⏸ Zatím neřeším TP</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="q-block">
+          <div class="q-num">Otázka 6</div>
+          <div class="q-label">Dodržel jsem strategii?</div>
+          <div class="btn-group" data-q="q6">
+            <button class="btn-opt" data-val="ANO">✅ ANO</button>
+            <button class="btn-opt" data-val="NE">❌ NE</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="q-block">
+          <div class="q-num">Otázka 7</div>
+          <div class="q-label">Provedl jsi záznam?</div>
+          <div class="btn-group" data-q="q7">
+            <button class="btn-opt" data-val="ANO">✅ ANO</button>
+            <button class="btn-opt" data-val="NE">❌ NE</button>
+            <button class="btn-opt" data-val="NA">N/A</button>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <button class="btn-eval" id="eval-btn" disabled>Vyhodnotit →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card result-card" id="result-card">
+    <div class="card-header">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span class="card-header-title">Výsledek</span>
+    </div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:var(--sp4)">
+      <p class="ts" id="ts"></p>
+      <div id="verdict" class="verdict green"><span id="v-icon">✅</span><span id="v-text">GREEN</span></div>
+      <div class="meta-row" id="meta"></div>
+      <div class="card" style="background:var(--color-surface-2)">
+        <div class="card-header"><span class="card-header-title">Reakce</span></div>
+        <div class="card-body"><div class="reactions" id="reactions"></div></div>
+      </div>
+      <div class="card" style="background:var(--color-surface-2)">
+        <div class="card-header"><span class="card-header-title">Checklist</span></div>
+        <div class="card-body"><div class="cl" id="checklist"></div></div>
+      </div>
+      <button class="btn-reset" id="reset-btn">🔄 Nový checklist</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const root=document.documentElement;
+  let theme='dark';
+  const themeBtn=document.getElementById('theme-btn');
+  function setTheme(t){
+    theme=t;root.setAttribute('data-theme',t);
+    themeBtn.innerHTML=t==='dark'
+      ?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      :'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  }
+  setTheme('dark');
+  themeBtn.addEventListener('click',()=>setTheme(theme==='dark'?'light':'dark'));
+
+  const ans={q1:null,q2:null,q3:null,q4:null,q5:null,q6:null,q7:null};
+  const evalBtn=document.getElementById('eval-btn');
+
+  document.querySelectorAll('.btn-group').forEach(g=>{
+    g.querySelectorAll('.btn-opt').forEach(b=>{
+      b.addEventListener('click',()=>{
+        g.querySelectorAll('.btn-opt').forEach(x=>x.classList.remove('sel'));
+        b.classList.add('sel');
+        ans[g.dataset.q]=b.dataset.val;
+        evalBtn.disabled=!Object.values(ans).every(v=>v!==null);
+      });
+    });
+  });
+
+  evalBtn.addEventListener('click',evaluate);
+  document.getElementById('reset-btn').addEventListener('click',reset);
+
+  function evaluate(){
+    const{q1,q2,q3,q4,q5,q6,q7}=ans;
+    const rxn=[],cl=[],red=[];
+
+    // Q1
+    if(q1==='ANO'){rxn.push({t:'Canva ✅ — Přehled trhu máš pod kontrolou, jdeme na to!',c:'ok'});cl.push({l:'Canva zkontrolována',d:true});}
+    else{rxn.push({t:'Ověř si jak obchodovat!',c:'warn'});cl.push({l:'Canva zkontrolována',d:false});red.push('Canva nezkontrolována');}
+
+    // Q2
+    cl.push({l:'P.A. identifikováno',d:true});
+    if(q2==='EXT') rxn.push({t:'Tvá nejčastější chyba je zavírání pozic moc brzy a otevírání zbytečných protipozic proti trendu. Zapiš si do grafu kdy brát TP a že protipozice se bere jen po BOS. Nezapomeň že se pozice otevírají na obě strany a jede vlny se počítají v rámci EXT i před novým high. Pozor na 0,40% pohyb s EP a TP.',c:'warn'});
+    else if(q2==='WAVE') rxn.push({t:'Buď trpělivý, dobře počítej vlny.',c:'ok'});
+    else if(q2==='RANGE') rxn.push({t:'Maximálně 2 pozice na každou stranu. Je-li Range větší, obchoduj i v rámci něj.',c:'ok'});
+
+    // Q3
+    cl.push({l:'Vlna spočítána',d:true});
+    if(['4','6','8','8+'].includes(q3)) rxn.push({t:'Nastav TP dle 123 EXT.',c:'info'});
+
+    // Q4
+    if(q4==='1-24'||q4==='25-48') rxn.push({t:'Nebere se TP.',c:'info'});
+    else if(q4==='120+') rxn.push({t:'Nastav TP na další vlnu, nebo ji vem v RANGE.',c:'warn'});
+
+    // Q5
+    cl.push({l:'TP limitní příkaz nastaven',d:true});
+
+    // Q6
+    if(q6==='ANO'){rxn.push({t:'Super!',c:'ok'});cl.push({l:'Strategie dodržena',d:true});}
+    else{rxn.push({t:'Zapiš co jsi udělal špatně ať skrze to můžeš růst.',c:'warn'});cl.push({l:'Strategie dodržena',d:false});red.push('Strategie nedodržena');}
+
+    // Q7
+    if(q7==='ANO'){rxn.push({t:'Super!',c:'ok'});cl.push({l:'Záznam proveden',d:true});}
+    else if(q7==='NE'){rxn.push({t:'Udělej to!',c:'warn'});cl.push({l:'Záznam proveden',d:false});red.push('Záznam neproveden');}
+    else cl.push({l:'Záznam proveden',d:true});
+
+    const isGreen=red.length===0;
+    const now=new Date();
+    document.getElementById('ts').textContent=now.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'long',year:'numeric'})+' · '+now.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
+
+    const vEl=document.getElementById('verdict');
+    vEl.className='verdict '+(isGreen?'green':'red');
+    document.getElementById('v-icon').textContent=isGreen?'✅':'❌';
+    document.getElementById('v-text').textContent=isGreen?'GREEN — Vše v pořádku!':'RED — '+red.join(', ');
+
+    document.getElementById('meta').innerHTML=[['Canva',q1==='ANO'?'✅':'❌'],['P.A.',q2],['Vlna',q3],['Svíčky',q4],['TP',q5==='ANO'?'✅':(q5==='NE'?'❌':'–')]].map(([k,v])=>`<div class="meta-chip">${k}: <strong>${v}</strong></div>`).join('');
+
+    document.getElementById('reactions').innerHTML=rxn.map(r=>`<div class="ri ${r.c}">${r.t}</div>`).join('');
+    document.getElementById('checklist').innerHTML=cl.map(i=>`<div class="cl-row ${i.d?'done':'fail'}"><span class="cl-icon">${i.d?'✔':'✘'}</span><span>${i.l}</span></div>`).join('');
+
+    document.getElementById('form-card').style.display='none';
+    const rc=document.getElementById('result-card');
+    rc.classList.add('vis');
+    rc.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  function reset(){
+    Object.keys(ans).forEach(k=>ans[k]=null);
+    document.querySelectorAll('.btn-opt').forEach(b=>b.classList.remove('sel'));
+    evalBtn.disabled=true;
+    document.getElementById('form-card').style.display='';
+    document.getElementById('result-card').classList.remove('vis');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+})();
+</script>
+</body>
+</html>
