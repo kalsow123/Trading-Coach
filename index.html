@@ -134,14 +134,12 @@ else if(q3==='4'){actions.push({label:'Vlna 4',text:'Nastav TP dle 123 EXT',tone
 else if(['5','6','7','8','8+'].includes(q3)){actions.push({label:'Vlna '+q3,text:'TP ob WAVE dle 123 EXT',tone:'gold'})}
 if(q4==='1-24'||q4==='25-48'){actions.push({label:'Svíčky '+q4,text:'Jsou-li jen 2 Vlny = není TP, mimo HTFM RANGE a EXT',tone:'warning'})}
 else if(q4==='120+'){actions.push({label:'Svíčky 120+',text:'Nastavit TP dle 123 EXT, nebo na vrchol 4/5 v RANGE',tone:'gold'})}
-if(q5==='ANO'){actions.push({label:'TP CHECK',text:'Vypl\u0148 TP checklist: <a href="https://kalsow123.github.io/TP-check-list/" target="_blank" style="color:#e8af34;font-weight:700">Otev\u0159\u00edt TP Check-list</a>',tone:'gold'})}
-cl.push({l:'TP limitní příkaz nastaven',d:true});
 cl.push({l:'TP limitní příkaz nastaven',d:true});
 if(q6==='ANO'){cl.push({l:'Strategie dodržena',d:true})}else{actions.push({label:'Strategie',text:'Zapiš pro růst co jsi udělal špatně do AI',tone:'error'});cl.push({l:'Strategie dodržena',d:false});red.push('Strategie')}
 if(q7==='ANO'){cl.push({l:'Záznam proveden',d:true})}else if(q7==='NE'){actions.push({label:'Záznam',text:'Dodělej zápis!',tone:'error'});cl.push({l:'Záznam proveden',d:false});red.push('Záznam')}else{cl.push({l:'Záznam proveden',d:true})}
 const isGreen=red.length===0;const now=new Date();
 document.getElementById('ts').textContent=now.toLocaleDateString('cs-CZ',{weekday:'short',day:'numeric',month:'long',year:'numeric'})+' '+now.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
-const vEl=document.getElementById('verdict');vEl.className='verdict '+(isGreen?'green':'red');https://github.com/kalsow123/Trading-Coach/blob/main/index.html#L5C70
+const vEl=document.getElementById('verdict');vEl.className='verdict '+(isGreen?'green':'red');
 document.getElementById('v-icon').textContent=isGreen?'\u2705':'\u26a0\ufe0f';
 document.getElementById('v-text').textContent=isGreen?'GREEN \u2013 V\u0161e v po\u0159\u00e1dku!':'RED \u2013 '+red.join(', ');
 document.getElementById('meta').innerHTML=[['Canva',q1==='ANO'?'\u2705':'\u274c'],['P.A.',q2],['Vlna',q3],['Sv\u00ed\u010dky',q4],['TP',q5==='ANO'?'\u2705':(q5==='NE'?'\u274c':'\u2014')]].map(([k,v])=>'<div class="meta-chip">'+k+' <strong>'+v+'</strong></div>').join('');
