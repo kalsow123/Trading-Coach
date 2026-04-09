@@ -134,7 +134,7 @@ else if(q3==='4'){actions.push({label:'Vlna 4',text:'Nastav TP dle 123 EXT',tone
 else if(['5','6','7','8','8+'].includes(q3)){actions.push({label:'Vlna '+q3,text:'TP ob WAVE dle 123 EXT',tone:'gold'})}
 if(q4==='1-24'||q4==='25-48'){actions.push({label:'Svíčky '+q4,text:'Jsou-li jen 2 Vlny = není TP, mimo HTFM RANGE a EXT',tone:'warning'})}
 else if(q4==='120+'){actions.push({label:'Svíčky 120+',text:'Nastavit TP dle 123 EXT, nebo na vrchol 4/5 v RANGE',tone:'gold'})}
-else if(q4==='120+'){actions.push({label:'Svíčky 120+',text:'Nastavit TP dle 123 EXT, nebo na vrchol 4/5 v RANGE',tone:'gold'})}
+if(q5==='ANO'){actions.push({label:'TP CHECK',text:'Zkontroluj TP s: <a href="https://kalsow123.github.io/TP-check-list/" target="_blank" style="color:#e8af34;font-weight:700">kalsow123.github.io/TP-check-list</a>',tone:'gold'})}
 if(q5==='ANO'){actions.push({label:'\uD83C\uDFAF TP CHECK',text:'Zkontroluj TP s: <a href="https://kalsow123.github.io/TP-check-list/" target="_blank" style="color:#e8af34;font-weight:700;text-decoration:underline;font-size:1.1em">https://kalsow123.github.io/TP-check-list/</a>',tone:'gold'})}
 cl.push({l:'TP limitní příkaz nastaven',d:true});
 if(q6==='ANO'){cl.push({l:'Strategie dodržena',d:true})}else{actions.push({label:'Strategie',text:'Zapiš pro růst co jsi udělal špatně do AI',tone:'error'});cl.push({l:'Strategie dodržena',d:false});red.push('Strategie')}
